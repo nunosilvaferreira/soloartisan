@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SoloArtisan — Handcrafted Haven Lite
 
-## Getting Started
+SoloArtisan is a project developed for **WDD 430 – Web Full-Stack Development**, designed to build a Next.js artisan storefront demo.  
+The goal is to create a minimal e-commerce experience with an artisan profile, a product catalog, product pages, and a clean design system.
 
-First, run the development server:
+This repository includes the foundational setup, design planning, dependencies, and initial file structure required for Week 02.
+
+---
+
+## 🚀 Technologies Used
+
+- **Next.js 14 (App Router)**
+- **React 18**
+- **TypeScript**
+- **Tailwind CSS**
+- **PostCSS & Autoprefixer**
+- **ESLint + Prettier (with Tailwind plugin)**
+- **CSS Variables for the design system**
+- **Node.js 18+**
+
+---
+
+## 📂 Project Structure
 
 ```bash
+./
+├── app
+│   ├── globals.css        # Global styles + color & typography variables
+│   ├── layout.tsx         # Global layout (Header + Footer integration)
+│   └── page.tsx           # Home page
+├── design
+│   ├── DESIGN.md          # Design documentation (palette, typography, spacing)
+│   └── pallete.png        # Official color palette
+├── public                 # Static assets
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── .gitignore
+├── .prettierrc
+├── eslint.config.mjs
+├── next.config.ts
+├── package.json
+├── package-lock.json
+├── postcss.config.mjs
+├── tailwind.config.js     # Tailwind config extended with design variables
+└── tsconfig.json
+🎨 Design System
+The visual system is located under:
+
+bash
+Copiar código
+/design
+This includes:
+
+Color palette (pallete.png)
+
+Full design documentation (DESIGN.md) covering:
+
+Primary / Secondary / Accent colors
+
+Typography guidelines
+
+Spacing system
+
+Component principles
+
+Accessibility notes
+
+Design variables are implemented in:
+
+bash
+Copiar código
+/app/globals.css
+And integrated into Tailwind via:
+
+arduino
+Copiar código
+/tailwind.config.js
+🧩 Running the Project
+1. Clone the repository
+bash
+Copiar código
+git clone https://github.com/nunosilvaferreira/soloartisan
+cd soloartisan
+2. Install dependencies
+bash
+Copiar código
+npm install
+3. Start the development server
+bash
+Copiar código
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+4. Open in browser
+arduino
+Copiar código
+http://localhost:3000
+✅ GitHub Project Board
+All project planning for Week 02 is available here:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🔗 Project Board:
+https://github.com/users/nunosilvaferreira/projects/1
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The board includes:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+User stories (issues)
 
-## Learn More
+Task progression
 
-To learn more about Next.js, take a look at the following resources:
+Week 02 work items
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To Do → In Progress → Review → Done workflow
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+📘 Important Documentation
+Design System: /design/DESIGN.md
 
-## Deploy on Vercel
+Color Palette: /design/pallete.png
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Global Styles: /app/globals.css
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Tailwind Configuration: /tailwind.config.js
+
+📄 License
+Academic project for educational purposes — BYU-Idaho / Pathway.
+You may reuse this code for learning.
+
+📬 Contact
+Developed by Nuno Silva Ferreira.
