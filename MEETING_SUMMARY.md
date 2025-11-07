@@ -4,7 +4,6 @@
 **Group Name:** SoloArtisan  
 **Week Leader:** Nuno Silva Ferreira  
 **Date:** (Insert date of meeting)  
-**Time:** 14:00 (MS Teams)
 
 ---
 
