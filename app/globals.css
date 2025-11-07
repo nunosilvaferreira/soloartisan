@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----------------------------------------------
+   Global Variables — SoloArtisan Design System
+   ---------------------------------------------- */
+
+:root {
+  /* Color palette */
+  --color-primary: #7A4F2B;
+  --color-secondary: #F5E9DE;
+  --color-accent: #A3C4BC;
+  --color-neutral-dark: #222222;
+  --color-neutral-light: #F7F7F7;
+
+  /* Typography */
+  --font-heading: "Inter", sans-serif;
+  --font-body: "Roboto", system-ui, sans-serif;
+}
+
+/* Dark mode (optional) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-neutral-light: #1a1a1a;
+    --color-neutral-dark: #f1f1f1;
+  }
+}
+
+/* ----------------------------------------------
+   Base Styles
+   ---------------------------------------------- */
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: var(--color-neutral-light);
+  color: var(--color-neutral-dark);
+  font-family: var(--font-body);
+}
+
+/* Reset anchor styling */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Smooth transitions for theme-based elements */
+* {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* ----------------------------------------------
+   Utility Classes (Custom Tailwind extensions)
+   ---------------------------------------------- */
+
+@layer utilities {
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+  .bg-secondary {
+    background-color: var(--color-secondary);
+  }
+  .bg-accent {
+    background-color: var(--color-accent);
+  }
+  .bg-neutral-light {
+    background-color: var(--color-neutral-light);
+  }
+  .bg-neutral-dark {
+    background-color: var(--color-neutral-dark);
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+  .text-accent {
+    color: var(--color-accent);
+  }
+  .text-neutral-light {
+    color: var(--color-neutral-light);
+  }
+  .text-neutral-dark {
+    color: var(--color-neutral-dark);
+  }
+
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+  .font-body {
+    font-family: var(--font-body);
+  }
+}
