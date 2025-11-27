@@ -1,75 +1,108 @@
-"use client"
+import products from "@/data/products"
+import Image from "next/image"
+import Link from "next/link"
+import Button from "@/components/Button"
 
-import { useState } from "react"
-import productsData from "@/data/products"
-import ProductCard from "@/components/ProductCard"
-import ProductFilters from "@/components/ProductFilters"
+interface ProductPageProps {
+  params: {
+    id: string
+  }
+}
 
-export default function ProductsPage() {
-  const categories = [...new Set(productsData.map((p) => p.category))]
+export default function ProductPage({ params }: ProductPageProps) {
+  const productId = parseInt(params.id)
+  const product = products.find((p) => p.id === productId)
 
-  const [search, setSearch] = useState("")
-  const [category, setCategory] = useState("")
-  const [sortOption, setSortOption] = useState("")
-
-  // ----------------------------
-  // FILTERING LOGIC
-  // ----------------------------
-  let filteredProducts = productsData.filter((product) => {
+  if (!product) {
     return (
-      product.name.toLowerCase().includes(search.toLowerCase()) &&
-      (category === "" || product.category === category)
-    )
-  })
-
-  // ----------------------------
-  // SORT LOGIC
-  // ----------------------------
-  if (sortOption === "price-asc") {
-    filteredProducts = filteredProducts.sort((a, b) => a.price - b.price)
-  } else if (sortOption === "price-desc") {
-    filteredProducts = filteredProducts.sort((a, b) => b.price - a.price)
-  } else if (sortOption === "name-asc") {
-    filteredProducts = filteredProducts.sort((a, b) =>
-      a.name.localeCompare(b.name)
-    )
-  } else if (sortOption === "name-desc") {
-    filteredProducts = filteredProducts.sort((a, b) =>
-      b.name.localeCompare(a.name)
+      <div className="text-center py-20">
+        <h1 className="font-heading text-3xl text-primary">Product Not Found</h1>
+        <Link href="/products">
+          <Button className="mt-6">Back to Products</Button>
+        </Link>
+      </div>
     )
   }
 
+  // Related products (same category, not this product)
+  const relatedProducts = products
+    .filter((p) => p.category === product.category && p.id !== product.id)
+    .slice(0, 3)
+
   return (
-    <div className="space-y-10">
-      <h1 className="font-heading text-4xl text-primary text-center">
-        Our Handmade Products
-      </h1>
+    <div className="max-w-5xl mx-auto space-y-16">
+      
+      {/* Back Button */}
+      <Link href="/products" className="inline-block">
+        <Button>&larr; Back to Products</Button>
+      </Link>
 
-      <p className="font-body text-neutralDark text-center max-w-2xl mx-auto mb-10">
-        Discover unique handcrafted creations made by talented artisans.
-        Each piece is created with intention, creativity, and care.
-      </p>
+      {/* Main Product Section */}
+      <div className="bg-white rounded-xl shadow-md overflow-hidden border border-neutralLight">
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={1200}
+          height={900}
+          className="w-full h-96 object-cover"
+        />
 
-      {/* Filters Section */}
-      <ProductFilters
-        categories={categories}
-        onSearch={setSearch}
-        onCategoryChange={setCategory}
-        onSortChange={setSortOption}
-      />
+        <div className="p-10 space-y-6">
+          {/* Product Title */}
+          <h1 className="font-heading text-5xl text-primary">{product.name}</h1>
 
-      {/* Product Grid */}
-      {filteredProducts.length === 0 ? (
-        <p className="text-center font-body text-neutralDark">
-          No products found for your criteria.
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {/* Description */}
+          <p className="font-body text-neutralDark text-lg leading-relaxed">
+            {product.description}
+          </p>
+
+          {/* Price */}
+          <p className="font-heading text-4xl text-neutralDark">
+            €{product.price.toFixed(2)}
+          </p>
+
+          {/* Add to Cart */}
+          <Button className="mt-6 w-full">Add to Cart</Button>
         </div>
+      </div>
+
+      {/* Related Products */}
+      {relatedProducts.length > 0 && (
+        <section className="space-y-6">
+          <h2 className="font-heading text-3xl text-primary">
+            Related Products
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {relatedProducts.map((item) => (
+              <Link key={item.id} href={`/products/${item.id}`}>
+                <div className="bg-white rounded-xl shadow-md overflow-hidden border border-neutralLight hover:shadow-lg transition">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    width={500}
+                    height={350}
+                    className="w-full h-56 object-cover"
+                  />
+
+                  <div className="p-5 space-y-2">
+                    <h3 className="font-heading text-xl text-primary">
+                      {item.name}
+                    </h3>
+                    <p className="font-body text-neutralDark text-sm line-clamp-2">
+                      {item.description}
+                    </p>
+                    <p className="font-heading text-lg text-neutralDark">
+                      €{item.price.toFixed(2)}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
       )}
+
     </div>
   )
 }
