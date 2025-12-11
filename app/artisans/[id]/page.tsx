@@ -4,25 +4,20 @@ import Button from "@/components/Button"
 import artisans from "@/data/artisans"
 
 interface ArtisanPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default function ArtisanProfilePage(props: ArtisanPageProps) {
-  // No optional chaining or param destructuring
-  const artisanId = props.params.id
+export default async function ArtisanProfilePage(props: ArtisanPageProps) {
+  // ✅ Next 16: params is a Promise → await
+  const resolvedParams = await props.params
+  const idParam = resolvedParams.id
 
-  // Find artisan by matching id as string (simple loop to avoid weird bundler issues)
-  let artisan: (typeof artisans)[number] | null = null
-  for (let i = 0; i < artisans.length; i++) {
-    if (String(artisans[i].id) === artisanId) {
-      artisan = artisans[i]
-      break
-    }
-  }
+  const artisanId = Number(idParam)
+  const artisan = artisans.find((a) => a.id === artisanId)
 
-  if (!artisan) {
+  if (!artisan || Number.isNaN(artisanId)) {
     return (
       <div className="text-center py-20">
         <h1 className="font-heading text-3xl text-primary">

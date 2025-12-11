@@ -5,25 +5,20 @@ import Button from "@/components/Button"
 import AddToCartButton from "@/components/AddToCartButton"
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default function ProductPage(props: ProductPageProps) {
-  // DO NOT USE optional chaining or destructuring - Turbopack bug on Windows
-  const productIdParam = props.params.id
+export default async function ProductPage(props: ProductPageProps) {
+  // ✅ Next 16: params is a Promise → we must await it
+  const resolvedParams = await props.params
+  const idParam = resolvedParams.id
 
-  // Find product by matching id as string
-  let product = null
-  for (let i = 0; i < products.length; i++) {
-    if (String(products[i].id) === productIdParam) {
-      product = products[i]
-      break
-    }
-  }
+  const productId = Number(idParam)
+  const product = products.find((p) => p.id === productId)
 
-  if (!product) {
+  if (!product || Number.isNaN(productId)) {
     return (
       <div className="text-center py-20">
         <h1 className="font-heading text-3xl text-primary">
@@ -36,17 +31,19 @@ export default function ProductPage(props: ProductPageProps) {
     )
   }
 
-  // Related Products
+  // Related products (same category, not this product)
   const relatedProducts = products
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 3)
 
   return (
     <div className="max-w-5xl mx-auto space-y-16">
+      {/* Back Button */}
       <Link href="/products" className="inline-block">
         <Button>&larr; Back to Products</Button>
       </Link>
 
+      {/* Main Product Section */}
       <div className="bg-white rounded-xl shadow-md overflow-hidden border border-neutralLight">
         <Image
           src={product.image}
@@ -57,16 +54,22 @@ export default function ProductPage(props: ProductPageProps) {
         />
 
         <div className="p-10 space-y-6">
-          <h1 className="font-heading text-5xl text-primary">{product.name}</h1>
+          {/* Product Title */}
+          <h1 className="font-heading text-5xl text-primary">
+            {product.name}
+          </h1>
 
+          {/* Description */}
           <p className="font-body text-neutralDark text-lg leading-relaxed">
             {product.description}
           </p>
 
+          {/* Price */}
           <p className="font-heading text-4xl text-neutralDark">
             €{product.price.toFixed(2)}
           </p>
 
+          {/* Add to Cart */}
           <AddToCartButton
             product={{
               id: product.id,
@@ -78,6 +81,7 @@ export default function ProductPage(props: ProductPageProps) {
         </div>
       </div>
 
+      {/* Related Products */}
       {relatedProducts.length > 0 && (
         <section className="space-y-6">
           <h2 className="font-heading text-3xl text-primary">
