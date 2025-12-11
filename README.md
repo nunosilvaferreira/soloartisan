@@ -1,129 +1,227 @@
 # SoloArtisan — Handcrafted Haven Lite
 
-SoloArtisan is a project developed for **WDD 430 – Web Full-Stack Development**, designed to build a Next.js artisan storefront demo.  
-The goal is to create a minimal e-commerce experience with an artisan profile, a product catalog, product pages, and a clean design system.
+SoloArtisan is a full-stack artisan storefront built as part of **WDD 430 – Web Full-Stack Development**.  
+This project simulates a minimal e-commerce experience featuring:
 
-This repository includes the foundational setup, design planning, dependencies, and initial file structure required for Week 02.
+- A product catalog  
+- Product detail pages  
+- Artisan profiles  
+- Search, filtering & sorting  
+- Favorites system  
+- API routes  
+- A fully designed frontend with a custom design system
+
+The project began in Week 02 and evolved through Weeks 03–07, following the course's project sprint structure.
 
 ---
 
-## 🚀 Technologies Used
+# 🚀 Technologies Used
 
 - **Next.js 14 (App Router)**
 - **React 18**
 - **TypeScript**
 - **Tailwind CSS**
-- **PostCSS & Autoprefixer**
-- **ESLint + Prettier (with Tailwind plugin)**
-- **CSS Variables for the design system**
-- **Node.js 18+**
+- **PostCSS + Autoprefixer**
+- **ESLint + Prettier**
+- **Lucide Icons**
+- **LocalStorage (favorites system)**
+- **Vercel (deployment)**
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
-```bash
 ./
 ├── app
-│   ├── globals.css        # Global styles + color & typography variables
-│   ├── layout.tsx         # Global layout (Header + Footer integration)
-│   └── page.tsx           # Home page
-├── design
-│   ├── DESIGN.md          # Design documentation (palette, typography, spacing)
-│   └── pallete.png        # Official color palette
-├── public                 # Static assets
-│   ├── file.svg
-│   ├── globe.svg
-│   ├── next.svg
-│   ├── vercel.svg
-│   └── window.svg
-├── .gitignore
-├── .prettierrc
-├── eslint.config.mjs
+│   ├── about/               # About the project
+│   ├── contact/             # Contact page
+│   ├── products/
+│   │   ├── page.tsx         # Product catalog (search + filters + sorting)
+│   │   └── [id]/page.tsx    # Product detail page
+│   ├── artisans/
+│   │   ├── page.tsx         # Artisan list
+│   │   └── [id]/page.tsx    # Artisan profile
+│   ├── api/
+│   │   └── products/
+│   │       ├── route.ts     # GET all products (API)
+│   │       └── [id]/route.ts# GET product by ID (API)
+│   ├── favorites/           # (Optional page for favorite products)
+│   ├── globals.css          # Global styles & design variables
+│   ├── layout.tsx           # Global layout (header/footer)
+│   └── page.tsx             # Home
+│
+├── components/              # Reusable UI components
+│   ├── Button.tsx
+│   ├── Footer.tsx
+│   ├── Header.tsx
+│   ├── Hero.tsx
+│   ├── ProductCard.tsx
+│   └── ProductFilters.tsx
+│
+├── data/
+│   ├── products.ts          # Mock product data
+│   └── artisans.ts          # Mock artisan data
+│
+├── public/                  # Static assets (images, icons)
+│
+├── design/
+│   ├── DESIGN.md            # Full design system documentation
+│   └── pallete.png          # Color palette
+│
+├── tailwind.config.js
 ├── next.config.ts
 ├── package.json
-├── package-lock.json
-├── postcss.config.mjs
-├── tailwind.config.js     # Tailwind config extended with design variables
+├── README.md
 └── tsconfig.json
-🎨 Design System
-The visual system is located under:
 
-bash
-Copiar código
-/design
-This includes:
+# 🎨 Design System
+The design system is defined in:
 
-Color palette (pallete.png)
+/design/DESIGN.md (complete documentation)
 
-Full design documentation (DESIGN.md) covering:
+/design/pallete.png (color palette)
 
-Primary / Secondary / Accent colors
+/app/globals.css (CSS variables: colors, typography, spacing)
 
-Typography guidelines
+The theme uses:
 
-Spacing system
+Primary color: #7A4F2B
 
-Component principles
+Secondary color: #F5E9DE
 
-Accessibility notes
+Accent color: #A3C4BC
 
-Design variables are implemented in:
+Neutral palette for backgrounds & typography
 
-bash
-Copiar código
-/app/globals.css
-And integrated into Tailwind via:
+Inter (headings)
 
-arduino
-Copiar código
-/tailwind.config.js
-🧩 Running the Project
-1. Clone the repository
-bash
-Copiar código
+Roboto (body text)
+
+Tailwind integrates these values through:
+
+// tailwind.config.js
+extend: {
+  colors: {
+    primary: "var(--color-primary)",
+    secondary: "var(--color-secondary)",
+    accent: "var(--color-accent)"
+  },
+  fontFamily: {
+    heading: "var(--font-heading)",
+    body: "var(--font-body)"
+  }
+}
+
+# 🛒 Features Implemented
+✔️ Product Catalog
+Live search
+
+Category filtering
+
+Sorting (price/name)
+
+Pageless grid layout
+
+✔️ Product Detail Page
+Large product image
+
+Price, description
+
+“Add to Cart” placeholder
+
+API integration for product fetch
+
+✔️ Artisan Profiles
+Artisan list
+
+Detailed artisan profile page
+
+Specialties section
+
+✔️ API Routes
+/api/products → returns all products
+
+/api/products/[id] → returns product by ID
+
+✔️ Favorites System
+Heart icon on product cards
+
+Saves in localStorage
+
+Optional /favorites page supported
+
+✔️ Clean UI Components
+Header
+
+Footer
+
+Hero
+
+Button
+
+ProductCard
+
+ProductFilters
+
+# 🧩 Running the Project Locally
+## 1. Clone the repository
+
 git clone https://github.com/nunosilvaferreira/soloartisan
 cd soloartisan
-2. Install dependencies
-bash
-Copiar código
+
+### 2. Install dependencies
+
 npm install
-3. Start the development server
-bash
-Copiar código
+
+##### 3. Start development server
+
 npm run dev
-4. Open in browser
-arduino
-Copiar código
+
+###### 4. Open in your browser
+
 http://localhost:3000
-✅ GitHub Project Board
-All project planning for Week 02 is available here:
 
-🔗 Project Board:
-https://github.com/users/nunosilvaferreira/projects/1
+# 🔧 API Endpoints
+GET all products
 
-The board includes:
+/api/products
+GET a single product
 
-User stories (issues)
+/api/products/:id
+Both return JSON and simulate a real backend.
 
-Task progression
+# 📘 Project Board (BYU-I Weekly Tasks)
+Weekly tasks, issues, and progress tracking:
 
-Week 02 work items
+🔗 https://github.com/users/nunosilvaferreira/projects/1
 
-To Do → In Progress → Review → Done workflow
+Includes:
 
-📘 Important Documentation
-Design System: /design/DESIGN.md
+Sprint planning
 
-Color Palette: /design/pallete.png
+Weekly WDD430 tasks
 
-Global Styles: /app/globals.css
+To Do → In Progress → Done workflow
 
-Tailwind Configuration: /tailwind.config.js
+Evidence for weekly assignments
 
-📄 License
-Academic project for educational purposes — BYU-Idaho / Pathway.
-You may reuse this code for learning.
+# 🌐 Deployment (Vercel)
+SoloArtisan is deployed using Vercel.
 
-📬 Contact
-Developed by Nuno Silva Ferreira.
+Deploy manually:
+
+vercel
+
+Or import directly from GitHub:
+
+https://vercel.com/new
+
+# 📄 License
+Academic project for educational purposes —
+BYU-Idaho / Pathway Connect — WDD 430.
+
+You may reuse this code for personal learning.
+
+# 📬 Contact
+Developed by Nuno Silva Ferreira
+For academic use (WDD 430, Winter 2025).

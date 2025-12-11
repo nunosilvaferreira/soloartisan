@@ -18,6 +18,7 @@ export default function Header() {
           <Link href="/products" className="hover:text-accent">Products</Link>
           <Link href="/about" className="hover:text-accent">About</Link>
           <Link href="/contact" className="hover:text-accent">Contact</Link>
+          <Link href="/favorites" className="hover:text-accent">Favorites</Link>
 
           {/* Cart Icon */}
           <Link href="/cart" className="relative">

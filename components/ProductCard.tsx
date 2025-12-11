@@ -1,6 +1,10 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import Button from "./Button"
+import { Heart } from "lucide-react"
 
 interface Product {
   id: number
@@ -11,8 +15,44 @@ interface Product {
 }
 
 export default function ProductCard({ product }: { product: Product }) {
+  const [isFavorited, setIsFavorited] = useState(false)
+
+  // Load initial favorite state
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("soloartisan-favorites") || "[]")
+    setIsFavorited(saved.includes(product.id))
+  }, [product.id])
+
+  // Toggle favorite state
+  const toggleFavorite = () => {
+    let saved = JSON.parse(localStorage.getItem("soloartisan-favorites") || "[]")
+
+    if (saved.includes(product.id)) {
+      saved = saved.filter((id: number) => id !== product.id)
+      setIsFavorited(false)
+    } else {
+      saved.push(product.id)
+      setIsFavorited(true)
+    }
+
+    localStorage.setItem("soloartisan-favorites", JSON.stringify(saved))
+  }
+
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden border border-neutralLight hover:shadow-lg transition">
+    <div className="relative bg-white rounded-xl shadow-md overflow-hidden border border-neutralLight hover:shadow-lg transition">
+
+      {/* Favorite Button */}
+      <button
+        onClick={toggleFavorite}
+        className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:scale-110 transition"
+      >
+        <Heart
+          className={`w-5 h-5 ${
+            isFavorited ? "text-red-500 fill-red-500" : "text-primary"
+          }`}
+        />
+      </button>
+
       {/* Product Image */}
       <Image
         src={product.image}
