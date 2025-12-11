@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Heart } from "lucide-react"
-import { cn } from "@/lib/utils"
 
 interface Product {
   id: number
@@ -43,18 +42,17 @@ export default function ProductCard({ product }: { product: Product }) {
   }
 
   return (
-    <div className="relative bg-white rounded-xl shadow-md overflow-hidden border border-neutralLight hover:shadow-lg transition">
+    <div className="product-card relative bg-white rounded-xl shadow-md overflow-hidden border border-neutralLight hover:shadow-lg transition">
       {/* Favorite Button */}
       <button
         type="button"
         onClick={toggleFavorite}
-        className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:scale-110 transition"
+        className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:scale-110 transition color: #f7e7d4"
       >
         <Heart
-          className={cn(
-            "w-5 h-5",
-            isFavorited ? "text-red-500 fill-red-500" : "text-primary"
-          )}
+          className={`w-5 h-5 product-heart ${
+            isFavorited ? "favorited" : ""
+          }`}
         />
       </button>
 
@@ -86,7 +84,7 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* Details Link styled as button */}
         <Link
           href={`/products/${product.id}`}
-          className="mt-4 inline-flex w-full justify-center rounded-xl bg-primary px-6 py-3 font-heading text-secondary hover:opacity-90 transition"
+          className="product-details-btn block text-center mt-4"
         >
           View Details
         </Link>
@@ -94,4 +92,3 @@ export default function ProductCard({ product }: { product: Product }) {
     </div>
   )
 }
-
