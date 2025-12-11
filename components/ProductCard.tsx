@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import Button from "./Button"
 import { Heart } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 interface Product {
   id: number
@@ -19,13 +19,17 @@ export default function ProductCard({ product }: { product: Product }) {
 
   // Load initial favorite state
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("soloartisan-favorites") || "[]")
+    const saved = JSON.parse(
+      localStorage.getItem("soloartisan-favorites") || "[]"
+    )
     setIsFavorited(saved.includes(product.id))
   }, [product.id])
 
   // Toggle favorite state
   const toggleFavorite = () => {
-    let saved = JSON.parse(localStorage.getItem("soloartisan-favorites") || "[]")
+    let saved = JSON.parse(
+      localStorage.getItem("soloartisan-favorites") || "[]"
+    )
 
     if (saved.includes(product.id)) {
       saved = saved.filter((id: number) => id !== product.id)
@@ -40,31 +44,36 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <div className="relative bg-white rounded-xl shadow-md overflow-hidden border border-neutralLight hover:shadow-lg transition">
-
       {/* Favorite Button */}
       <button
+        type="button"
         onClick={toggleFavorite}
         className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:scale-110 transition"
       >
         <Heart
-          className={`w-5 h-5 ${
+          className={cn(
+            "w-5 h-5",
             isFavorited ? "text-red-500 fill-red-500" : "text-primary"
-          }`}
+          )}
         />
       </button>
 
       {/* Product Image */}
-      <Image
-        src={product.image}
-        alt={product.name}
-        width={500}
-        height={350}
-        className="w-full h-60 object-cover"
-      />
+      <div className="flex justify-center">
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={400}
+          height={280}
+          className="product-image h-60 object-cover mx-auto"
+        />
+      </div>
 
       {/* Info */}
       <div className="p-6 space-y-3">
-        <h2 className="font-heading text-2xl text-primary">{product.name}</h2>
+        <h2 className="font-heading text-2xl text-primary">
+          {product.name}
+        </h2>
 
         <p className="font-body text-neutralDark text-sm line-clamp-2">
           {product.description}
@@ -74,9 +83,12 @@ export default function ProductCard({ product }: { product: Product }) {
           €{product.price.toFixed(2)}
         </p>
 
-        {/* Details Button */}
-        <Link href={`/products/${product.id}`}>
-          <Button className="mt-4 w-full">View Details</Button>
+        {/* Details Link styled as button */}
+        <Link
+          href={`/products/${product.id}`}
+          className="mt-4 inline-flex w-full justify-center rounded-xl bg-primary px-6 py-3 font-heading text-secondary hover:opacity-90 transition"
+        >
+          View Details
         </Link>
       </div>
     </div>

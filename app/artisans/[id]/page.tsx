@@ -9,9 +9,18 @@ interface ArtisanPageProps {
   }
 }
 
-export default function ArtisanProfilePage({ params }: ArtisanPageProps) {
-  const artisanId = parseInt(params.id)
-  const artisan = artisans.find((a) => a.id === artisanId)
+export default function ArtisanProfilePage(props: ArtisanPageProps) {
+  // No optional chaining or param destructuring
+  const artisanId = props.params.id
+
+  // Find artisan by matching id as string (simple loop to avoid weird bundler issues)
+  let artisan: (typeof artisans)[number] | null = null
+  for (let i = 0; i < artisans.length; i++) {
+    if (String(artisans[i].id) === artisanId) {
+      artisan = artisans[i]
+      break
+    }
+  }
 
   if (!artisan) {
     return (
@@ -32,33 +41,39 @@ export default function ArtisanProfilePage({ params }: ArtisanPageProps) {
         <Button>&larr; Back to Artisans</Button>
       </Link>
 
-      <div className="bg-white rounded-xl shadow-md overflow-hidden border border-neutralLight">
-        <Image
-          src={artisan.image}
-          alt={artisan.name}
-          width={1200}
-          height={800}
-          className="w-full h-96 object-cover"
-        />
+      <div className="bg-white rounded-xl shadow-md border border-neutralLight p-8 space-y-6">
+        <div className="flex items-center gap-4">
+          <Image
+            src={artisan.image}
+            alt={artisan.name}
+            width={60}
+            height={60}
+            className="artisan-avatar"
+          />
+          <div>
+            <h1 className="font-heading text-3xl text-primary">
+              {artisan.name}
+            </h1>
+            <p className="font-body text-neutralDark text-sm">
+              {artisan.shortBio}
+            </p>
+          </div>
+        </div>
 
-        <div className="p-8 space-y-6">
-          <h1 className="font-heading text-4xl text-primary">
-            {artisan.name}
-          </h1>
+        <p className="font-body text-neutralDark text-lg">{artisan.bio}</p>
 
-          <p className="font-body text-neutralDark text-lg">
-            {artisan.bio}
-          </p>
-
-          <h2 className="font-heading text-2xl text-primary mt-10">Specialties</h2>
-          <ul className="list-disc list-inside font-body text-neutralDark">
+        <div>
+          <h2 className="font-heading text-2xl text-primary mt-4">
+            Specialties
+          </h2>
+          <ul className="list-disc list-inside font-body text-neutralDark mt-2">
             {artisan.specialties.map((skill, index) => (
               <li key={index}>{skill}</li>
             ))}
           </ul>
-
-          <Button className="mt-8 w-full">Contact Artisan</Button>
         </div>
+
+        <Button className="mt-6 w-full">Contact Artisan</Button>
       </div>
     </div>
   )

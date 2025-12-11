@@ -1,9 +1,18 @@
 "use client"
 
 import Button from "./Button"
-import { addToCart } from "@/lib/cart"
+import { useCart } from "@/context/CartContext"
 
-export default function AddToCartButton({ product }) {
+type ProductInput = {
+  id: number
+  name: string
+  price: number
+  image: string
+}
+
+export default function AddToCartButton({ product }: { product: ProductInput }) {
+  const { addToCart } = useCart()
+
   return (
     <Button
       onClick={() => {

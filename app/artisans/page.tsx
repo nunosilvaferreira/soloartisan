@@ -9,23 +9,22 @@ export default function ArtisanListPage() {
         Meet Our Artisans
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {artisans.map((artisan) => (
           <Link key={artisan.id} href={`/artisans/${artisan.id}`}>
-            <div className="bg-white rounded-xl shadow-md overflow-hidden border border-neutralLight hover:shadow-lg transition">
+            <div className="bg-white rounded-xl shadow-md border border-neutralLight hover:shadow-lg transition p-5 flex items-center gap-4">
               <Image
                 src={artisan.image}
                 alt={artisan.name}
-                width={500}
-                height={350}
-                className="w-full h-60 object-cover"
+                width={60}
+                height={60}
+                className="artisan-avatar"
               />
-
-              <div className="p-5">
-                <h2 className="font-heading text-xl text-primary">
+              <div>
+                <h2 className="font-heading text-lg text-primary">
                   {artisan.name}
                 </h2>
-                <p className="font-body text-neutralDark text-sm mt-2">
+                <p className="font-body text-neutralDark text-sm mt-1 line-clamp-2">
                   {artisan.shortBio}
                 </p>
               </div>

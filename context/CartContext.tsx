@@ -10,9 +10,11 @@ interface CartItem {
   quantity: number
 }
 
+type ProductInput = Omit<CartItem, "quantity">
+
 interface CartContextType {
   cart: CartItem[]
-  addToCart: (product: CartItem) => void
+  addToCart: (product: ProductInput) => void
   removeFromCart: (id: number) => void
   clearCart: () => void
 }
@@ -22,7 +24,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([])
 
-  function addToCart(product: CartItem) {
+  function addToCart(product: ProductInput) {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product.id)
 
@@ -47,7 +49,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   )

@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className="font-body bg-neutralLight text-neutralDark">
         <CartProvider>
           <Header />
-          <main className="container mx-auto px-6 py-10">
+          <main className="container mx-auto px-4 sm:px-6 py-10">
             {children}
           </main>
           <Footer />

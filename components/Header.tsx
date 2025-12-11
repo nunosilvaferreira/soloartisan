@@ -8,23 +8,29 @@ export default function Header() {
   const { cart } = useCart()
 
   return (
-    <header className="bg-primary text-secondary py-4 shadow-md">
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        <Link href="/" className="font-heading text-2xl">
+    <header className="site-header bg-primary text-secondary shadow-md">
+      <div className="header-inner container mx-auto px-4 py-4">
+        <Link href="/" className="font-heading text-2xl tracking-tight">
           SoloArtisan
         </Link>
 
-        <nav className="flex items-center gap-6 font-body">
-          <Link href="/products" className="hover:text-accent">Products</Link>
-          <Link href="/about" className="hover:text-accent">About</Link>
-          <Link href="/contact" className="hover:text-accent">Contact</Link>
-          <Link href="/favorites" className="hover:text-accent">Favorites</Link>
+        <nav className="header-nav font-body text-sm sm:text-base">
+          <Link href="/products" className="hover:text-accent">
+            Products
+          </Link>
+          <Link href="/about" className="hover:text-accent">
+            About
+          </Link>
+          <Link href="/contact" className="hover:text-accent">
+            Contact
+          </Link>
+          <Link href="/favorites" className="hover:text-accent">
+            Favorites
+          </Link>
 
           {/* Cart Icon */}
-          <Link href="/cart" className="relative">
+          <Link href="/cart" className="relative flex items-center">
             <ShoppingCart className="w-6 h-6 hover:text-accent" />
-
-            {/* Cart Badge */}
             {cart && cart.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-accent text-neutralDark text-xs px-2 py-1 rounded-full">
                 {cart.length}
