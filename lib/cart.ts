@@ -1,17 +1,47 @@
-"use client"
+// lib/cart.ts
 
-export function getCart() {
-  if (typeof window === "undefined") return []
-  const cart = localStorage.getItem("soloartisan-cart")
-  return cart ? JSON.parse(cart) : []
+// Basic cart product type (matches what we put in the cart)
+export interface CartProduct {
+  id: number
+  name: string
+  price: number
+  image: string
 }
 
-export function addToCart(product) {
+const STORAGE_KEY = "soloartisan-cart"
+
+// Safely get cart (empty array on server or if nothing saved)
+export function getCart(): CartProduct[] {
+  if (typeof window === "undefined") {
+    // During SSR, localStorage is not available
+    return []
+  }
+
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY)
+    if (!raw) return []
+    return JSON.parse(raw) as CartProduct[]
+  } catch {
+    return []
+  }
+}
+
+// Add a product to the cart in localStorage
+export function addToCart(product: CartProduct): void {
+  if (typeof window === "undefined") {
+    return
+  }
+
   const cart = getCart()
   cart.push(product)
-  localStorage.setItem("soloartisan-cart", JSON.stringify(cart))
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(cart))
 }
 
-export function clearCart() {
-  localStorage.removeItem("soloartisan-cart")
+// Optional helper if you ever need to clear cart from localStorage
+export function clearCart(): void {
+  if (typeof window === "undefined") {
+    return
+  }
+
+  window.localStorage.removeItem(STORAGE_KEY)
 }
