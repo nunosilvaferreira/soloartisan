@@ -1,18 +1,21 @@
+/* -------------------------------------------------------
+   Tailwind Base
+-------------------------------------------------------- */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Font Imports */
 @import "@fontsource/inter/400.css";
 @import "@fontsource/inter/700.css";
 @import "@fontsource/roboto/400.css";
 @import "@fontsource/roboto/500.css";
 
-/* ----------------------------------------------
-   Global Variables — SoloArtisan Design System
-   ---------------------------------------------- */
-
+/* -------------------------------------------------------
+   🌿 Design System Variables — SOLOARTISAN
+-------------------------------------------------------- */
 :root {
-  /* Color palette */
+  /* Color Palette */
   --color-primary: #7A4F2B;
   --color-secondary: #F5E9DE;
   --color-accent: #A3C4BC;
@@ -22,9 +25,22 @@
   /* Typography */
   --font-heading: "Inter", sans-serif;
   --font-body: "Roboto", system-ui, sans-serif;
+
+  /* Shadows */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.10);
+  --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  /* Transitions */
+  --transition-base: 0.25s ease;
 }
 
-/* Dark mode (optional) */
+/* 🌙 Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
     --color-neutral-light: #1a1a1a;
@@ -32,72 +48,159 @@
   }
 }
 
-/* ----------------------------------------------
-   Base Styles
-   ---------------------------------------------- */
+/* -------------------------------------------------------
+   Base Global Styles
+-------------------------------------------------------- */
 
-html,
-body {
-  padding: 0;
+html, body {
   margin: 0;
+  padding: 0;
   background-color: var(--color-neutral-light);
   color: var(--color-neutral-dark);
   font-family: var(--font-body);
+  scroll-behavior: smooth;
 }
 
-/* Reset anchor styling */
+/* Smooth Transitions */
+* {
+  transition: background-color var(--transition-base),
+              color var(--transition-base),
+              border var(--transition-base),
+              box-shadow var(--transition-base);
+}
+
+/* Modern Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-neutral-light);
+}
+
+/* -------------------------------------------------------
+   Typography
+-------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+  margin-bottom: 0.6em;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.3rem; }
+h3 { font-size: 1.8rem; }
+
+p {
+  margin-bottom: 1em;
+  line-height: 1.7;
+  color: var(--color-neutral-dark);
+  font-size: 1.05rem;
+}
+
+/* Links */
 a {
-  color: inherit;
+  color: var(--color-primary);
   text-decoration: none;
 }
 
-/* Smooth transitions for theme-based elements */
-* {
-  transition: background-color 0.25s ease, color 0.25s ease;
+a:hover {
+  color: var(--color-accent);
 }
 
-/* ----------------------------------------------
+/* -------------------------------------------------------
+   Buttons (global base)
+-------------------------------------------------------- */
+
+button {
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  padding: 0.8rem 1.4rem;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+button:hover {
+  opacity: 0.9;
+  box-shadow: var(--shadow-medium);
+}
+
+button:active {
+  opacity: 0.85;
+}
+
+/* -------------------------------------------------------
+   Cards — used across the entire site
+-------------------------------------------------------- */
+
+.card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 1.6rem;
+  border: 1px solid #eaeaea;
+  box-shadow: var(--shadow-soft);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-3px);
+}
+
+/* -------------------------------------------------------
+   Inputs, Selects, Textareas
+-------------------------------------------------------- */
+
+input, select, textarea {
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  background: white;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(122,79,43,0.2);
+}
+
+/* -------------------------------------------------------
    Utility Classes (Custom Tailwind extensions)
-   ---------------------------------------------- */
+-------------------------------------------------------- */
 
 @layer utilities {
-  .bg-primary {
-    background-color: var(--color-primary);
-  }
-  .bg-secondary {
-    background-color: var(--color-secondary);
-  }
-  .bg-accent {
-    background-color: var(--color-accent);
-  }
-  .bg-neutral-light {
-    background-color: var(--color-neutral-light);
-  }
-  .bg-neutral-dark {
-    background-color: var(--color-neutral-dark);
-  }
+  .bg-primary { background-color: var(--color-primary); }
+  .bg-secondary { background-color: var(--color-secondary); }
+  .bg-accent { background-color: var(--color-accent); }
+  .bg-neutral-light { background-color: var(--color-neutral-light); }
+  .bg-neutral-dark { background-color: var(--color-neutral-dark); }
 
-  .text-primary {
-    color: var(--color-primary);
-  }
-  .text-secondary {
-    color: var(--color-secondary);
-  }
-  .text-accent {
-    color: var(--color-accent);
-  }
-  .text-neutral-light {
-    color: var(--color-neutral-light);
-  }
-  .text-neutral-dark {
-    color: var(--color-neutral-dark);
-  }
+  .text-primary { color: var(--color-primary); }
+  .text-secondary { color: var(--color-secondary); }
+  .text-accent { color: var(--color-accent); }
+  .text-neutral-light { color: var(--color-neutral-light); }
+  .text-neutral-dark { color: var(--color-neutral-dark); }
 
-  .font-heading {
-    font-family: var(--font-heading);
-  }
-  .font-body {
-    font-family: var(--font-body);
-  }
+  .font-heading { font-family: var(--font-heading); }
+  .font-body { font-family: var(--font-body); }
+
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-medium { box-shadow: var(--shadow-medium); }
+  .shadow-large { box-shadow: var(--shadow-large); }
+
+  .rounded-sm { border-radius: var(--radius-sm); }
+  .rounded-md { border-radius: var(--radius-md); }
+  .rounded-lg { border-radius: var(--radius-lg); }
 }
-
